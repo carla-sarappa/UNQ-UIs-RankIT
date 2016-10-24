@@ -1,8 +1,8 @@
-package org.uqbar.biblioteca.controller
+package ar.edu.unq.uis.rankit.controller
 
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException
-import org.uqbar.biblioteca.model.Biblioteca
-import org.uqbar.biblioteca.model.Libro
+import ar.edu.unq.uis.rankit.model.Biblioteca
+import ar.edu.unq.uis.rankit.model.Libro
 import org.uqbar.xtrest.api.annotation.Body
 import org.uqbar.xtrest.api.annotation.Controller
 import org.uqbar.xtrest.api.annotation.Delete
@@ -29,7 +29,7 @@ class BibliotecaController {
     @Get("/libros/:id")
     def getLibroById() {
         response.contentType = ContentType.APPLICATION_JSON
-        try {        	
+        try {
             var libro = this.biblioteca.getLibro(Integer.valueOf(id))
             if (libro == null) {
             	notFound('{ "error": "No existe libro con ese id" }')

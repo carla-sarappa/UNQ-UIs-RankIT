@@ -1,4 +1,4 @@
-package org.uqbar.biblioteca.model
+package ar.edu.unq.uis.rankit.model
 
 import org.eclipse.xtend.lib.annotations.Accessors
 

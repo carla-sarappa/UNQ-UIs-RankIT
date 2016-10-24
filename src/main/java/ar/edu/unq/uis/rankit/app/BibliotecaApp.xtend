@@ -1,9 +1,9 @@
-package org.uqbar.biblioteca.app
+package ar.edu.unq.uis.rankit.app
 
-import org.uqbar.biblioteca.controller.BibliotecaController
-import org.uqbar.biblioteca.model.Biblioteca
-import org.uqbar.biblioteca.model.Libro
+import ar.edu.unq.uis.rankit.controller.BibliotecaController
 import org.uqbar.xtrest.api.XTRest
+import ar.edu.unq.uis.rankit.model.Libro
+import ar.edu.unq.uis.rankit.model.Biblioteca
 
 class BibliotecaApp {
 	
