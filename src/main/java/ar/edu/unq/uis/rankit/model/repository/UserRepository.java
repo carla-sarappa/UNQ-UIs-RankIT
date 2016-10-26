@@ -3,6 +3,7 @@ package ar.edu.unq.uis.rankit.model.repository;
 import org.eclipse.jetty.io.RuntimeIOException;
 import org.eclipse.xtend.lib.annotations.Accessors;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import ar.edu.unq.uis.rankit.model.Usuario;
@@ -25,4 +26,6 @@ public class UserRepository extends BaseRepository<Usuario> {
     public Optional<Usuario> findUserByName(String nombre){
         return findOneBy((usuario) -> usuario.getNombre().equals(nombre));
     }
+
+
 }

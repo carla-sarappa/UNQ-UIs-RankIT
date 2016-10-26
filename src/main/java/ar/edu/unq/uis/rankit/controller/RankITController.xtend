@@ -117,7 +117,7 @@ class RankITController {
     @Get("/calificaciones")
     def getCalificacion(){
         response.contentType = ContentType.APPLICATION_JSON
-        ok()
+        ok(repositories.calificaciones.findAll().toJson)
 
     }
 

@@ -7,11 +7,13 @@ public class Repositories {
     public UserRepository users;
     public EvaluadoRepository evaluados;
     public RankingRepository ranking;
+    public CalificacionRepository calificaciones;
 
     public Repositories() {
         this.users = new UserRepository();
         this.evaluados = new EvaluadoRepository();
         this.ranking = new RankingRepository();
+        this.calificaciones = new CalificacionRepository();
     }
 
 }

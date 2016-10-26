@@ -17,7 +17,10 @@ class RankITApp {
         var repositories = new Repositories
 
         repositories.users.save(new Usuario("Carla", "123"))
-        repositories.evaluados.save(new Evaluado("Heladeria"))
+        repositories.users.save(new Usuario("Gianni", "123"))
+
+        repositories.evaluados.save(new Evaluado("Heladeria", "LUGAR"))
+        repositories.evaluados.save(new Evaluado("Plomeria Frodo", "SERVICIO"))
 
         XTRest.startInstance(new RankITController(repositories), 9000)
     }

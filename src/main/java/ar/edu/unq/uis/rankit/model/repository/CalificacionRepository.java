@@ -5,5 +5,5 @@ import ar.edu.unq.uis.rankit.model.Calificacion;
 /**
  * Created by Sarappa Carla on 23/10/16 00:32.
  */
-class CalificacionRepository extends BaseRepository<Calificacion>{
+public class CalificacionRepository extends BaseRepository<Calificacion>{
 }
