@@ -1,19 +1,17 @@
 package ar.edu.unq.uis.rankit.controller
 
-import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
+import ar.edu.unq.uis.rankit.model.Usuario
+import ar.edu.unq.uis.rankit.model.repository.Repositories
+import java.util.HashMap
+import javax.servlet.http.Cookie
 import org.uqbar.xtrest.api.annotation.Body
 import org.uqbar.xtrest.api.annotation.Controller
 import org.uqbar.xtrest.api.annotation.Delete
 import org.uqbar.xtrest.api.annotation.Get
 import org.uqbar.xtrest.api.annotation.Post
+import org.uqbar.xtrest.api.annotation.Put
 import org.uqbar.xtrest.http.ContentType
 import org.uqbar.xtrest.json.JSONUtils
-import org.uqbar.xtrest.api.annotation.Put
-import ar.edu.unq.uis.rankit.model.repository.BaseRepository
-import ar.edu.unq.uis.rankit.model.Usuario
-import ar.edu.unq.uis.rankit.model.Evaluado
-import ar.edu.unq.uis.rankit.model.Calificacion
-import ar.edu.unq.uis.rankit.model.repository.Repositories
 
 /**
  * Created by Sarappa Carla on 22/10/16 21:13.
@@ -22,10 +20,12 @@ import ar.edu.unq.uis.rankit.model.repository.Repositories
 @Controller
 class RankITController {
     extension JSONUtils = new JSONUtils
-    Repositories repositories;
+    Repositories repositories
+    HashMap<String, Usuario> usuariosLogueados
 
     new(Repositories repositories){
         this.repositories = repositories
+        this.usuariosLogueados = newHashMap()
     }
 
 
@@ -47,10 +47,26 @@ class RankITController {
     }
 
     @Post("/usuarios")
-    def login(String nombre, String password) {
+    def login(@Body String body) {
         response.contentType = ContentType.APPLICATION_JSON
 
-        ok()
+        var usuario = body.fromJson(Usuario)
+        val dbUsuario = repositories.users.findUserByName(usuario.getNombre)
+
+        if(!dbUsuario.isPresent){
+            notFound('''{ "error": "No existe el usuario" }''')
+        } else if (dbUsuario.get.getPassword == usuario.getPassword){
+            val cookie = dbUsuario.get.hashCode.toString
+            usuariosLogueados.put(cookie, dbUsuario.get)
+            response.addCookie(new Cookie("session", cookie))
+            ok( #{'id' -> dbUsuario.get.getId}.toJson)
+        } else {
+            body('''{ "error": "Contraseña incorrecta" }''')
+            response.setStatus(401)
+        }
+
+        // TODO refactor
+
     }
 
     @Get("/usuarios")
@@ -61,15 +77,17 @@ class RankITController {
 
 
     @Get("/evaluados")
-    def getEvaluadosById() {
+    def verListaEvaluados() {
+        // buscar por nombre, tipo,
+        // cantidad de calificaciones >=, ranking >=
         response.contentType = ContentType.APPLICATION_JSON
-        ok()
+        ok(repositories.evaluados.findAll().toJson)
     }
 
     @Get("/ranking")
     def getRanking(){
         response.contentType = ContentType.APPLICATION_JSON
-        ok()
+        ok(repositories.ranking.findAll().toJson)
 
     }
 

@@ -5,9 +5,13 @@ package ar.edu.unq.uis.rankit.model.repository;
  */
 public class Repositories {
     public UserRepository users;
+    public EvaluadoRepository evaluados;
+    public RankingRepository ranking;
 
     public Repositories() {
         this.users = new UserRepository();
+        this.evaluados = new EvaluadoRepository();
+        this.ranking = new RankingRepository();
     }
 
 }
